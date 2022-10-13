@@ -1,3 +1,7 @@
+import javax.swing.*;
+import java.awt.*;
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args){
         //This is disgusting, but hey it works.
@@ -11,6 +15,8 @@ public class Main {
             while(input[0] == null){
                 input = loginPage.getInfo();
             }
+            String userName = input[0];
+            String password = input[1];
             //input should now be an array containing User Name as a String (input[0]) and Password as a Character Array (input[1]). We need to authenticate this.
             //if(login is valid){
                 //break;
@@ -22,6 +28,14 @@ public class Main {
             //JOptionPane.showMessageDialog(null, "Invalid Username and/or Password, you have "+i+" attempts remaining");
         //}
         //From confirming authentication, we should send a packet out to the server saying we are alive.
-        //From here, open contact List?
+        JFrame frame = new JFrame();
+        frame.setTitle("Contact List");
+        frame.setSize(300, 400);
+        frame.setLocationRelativeTo(null);
+        ContactList cl = new ContactList(userName);
+        frame.add(cl.getMb(), BorderLayout.NORTH);
+        frame.add(cl.getContent());
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 }
