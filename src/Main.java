@@ -17,6 +17,7 @@ public class Main {
             }
             String userName = input[0];
             String password = input[1];
+            //TODO: Validate Login
             //input should now be an array containing User Name as a String (input[0]) and Password as a Character Array (input[1]). We need to authenticate this.
             //if(login is valid){
                 //break;

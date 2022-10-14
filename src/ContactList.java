@@ -18,6 +18,7 @@ public class ContactList {
         availableBox.addItem("Invisible");
         availableBox.addItem("Offline");
         availableBox.addActionListener(e->{
+            //TODO: Send availability to the server
             //availableBox.getItemAt(availableBox.getSelectedIndex());
             //Send availability to the server
         });
