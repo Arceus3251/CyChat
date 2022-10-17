@@ -1,3 +1,4 @@
-# CyberSecuritySE2022Project
-SHSU Cyber Security Group Software Engineering Project, name subject to change
+# CyChatSE2022Project
+Cychat Project
+SHSU Cyber-security Group Software Engineering Project
 hi
