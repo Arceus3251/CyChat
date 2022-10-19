@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Arrays;
 
 public class LoginPage {
@@ -29,9 +31,25 @@ public class LoginPage {
         //Creating the submit button
         JButton submitButton = new JButton("Login");
         submitButton.addActionListener(e -> {
-            information[0] = userField.getText();
-            information[1] = Arrays.toString(passField.getPassword());
-            frame.dispose();
+            submitAction(userField, passField, frame);
+        });
+        passField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    submitAction(userField, passField, frame);
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
         });
         //Creating the SignUp Button
         JButton signUpButton = new JButton("Sign Up");
@@ -40,15 +58,31 @@ public class LoginPage {
                 JOptionPane.showMessageDialog(null, "Passwords do not match. Please Try again.");
             }
             else {
-                String userName = userField.getText();
-                String pass = Arrays.toString(passField.getPassword());
-                //Do something with it.. Sign up.. Probably, kek.
+                registerAction(userField.getText(), passField.getPassword());
                 JOptionPane.showMessageDialog(null, "User Created! Please log in.");
                 userField.setText("");
                 labelPanel.remove(2);
                 fieldPanel.remove(2);
                 frame.remove(signUpButton);
                 frame.add(BorderLayout.SOUTH, submitButton);
+                passField.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                            submitAction(userField, passField, frame);
+                        }
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+
+                    }
+                });
                 labelPanel.updateUI();
             }
         });
@@ -62,6 +96,54 @@ public class LoginPage {
             labelPanel.updateUI();
             frame.remove(submitButton);
             frame.add(BorderLayout.SOUTH, signUpButton);
+            passField.removeKeyListener(passField.getKeyListeners()[0]);
+            retypePass.addKeyListener(new KeyListener() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+
+                }
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        if (!((Arrays.toString(passField.getPassword())).equals(Arrays.toString(retypePass.getPassword())))) {
+                            JOptionPane.showMessageDialog(null, "Passwords do not match. Please Try again.");
+                        } else {
+                            registerAction(userField.getText(), passField.getPassword());
+                            JOptionPane.showMessageDialog(null, "User Created! Please log in.");
+                            userField.setText("");
+                            labelPanel.remove(2);
+                            fieldPanel.remove(2);
+                            passField.addKeyListener(new KeyListener() {
+                                @Override
+                                public void keyTyped(KeyEvent e) {
+
+                                }
+
+                                @Override
+                                public void keyPressed(KeyEvent e) {
+                                    if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                                        submitAction(userField, passField, frame);
+                                    }
+                                }
+
+                                @Override
+                                public void keyReleased(KeyEvent e) {
+
+                                }
+                            });
+                            frame.remove(signUpButton);
+                            frame.add(BorderLayout.SOUTH, submitButton);
+                            labelPanel.updateUI();
+                        }
+                    }
+                }
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+
+                }
+            });
         });
         labelPanel.add(newUserBox);
         //Begin adding objects to the frame
@@ -73,5 +155,13 @@ public class LoginPage {
     }
     public String[] getInfo(){
         return information;
+    }
+    public void submitAction(JTextField userField, JPasswordField passField, JFrame frame){
+        information[0] = userField.getText();
+        information[1] = Arrays.toString(passField.getPassword());
+        frame.dispose();
+    }
+    public void registerAction(String userField, char[] password){
+        //TODO:Sign the user up for CyChat
     }
 }
