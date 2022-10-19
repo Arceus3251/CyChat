@@ -33,7 +33,7 @@ public class LoginPage {
             information[1] = Arrays.toString(passField.getPassword());
             frame.dispose();
         });
-        //Creating the Signup Button
+        //Creating the SignUp Button
         JButton signUpButton = new JButton("Sign Up");
         signUpButton.addActionListener(e ->{
             if(!((Arrays.toString(passField.getPassword())).equals(Arrays.toString(retypePass.getPassword())))){

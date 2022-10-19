@@ -23,8 +23,14 @@ public class ContactList {
             //Send availability to the server
         });
         JPanel statusPanel = new JPanel();
+        JScrollPane contactPanel = new JScrollPane();
+        //TODO: Define structure to retrieve list of contacts
+        //for contact: contacts{
+            //TODO: Build panel for each contact
+            //contactPanel.add(contactThing);
         statusPanel.add(BorderLayout.WEST, userLabel);
         statusPanel.add(BorderLayout.AFTER_LINE_ENDS, availableBox);
+        framePanel.add(contactPanel);
         framePanel.add(BorderLayout.NORTH, statusPanel);
     }
     public JPanel getContent(){
