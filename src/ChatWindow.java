@@ -3,7 +3,7 @@ import java.awt.*;
 import java.net.
 
 public class ChatWindow extends JFrame {
-    //public ChatWindow(){
+    //pu blic ChatWindow(){
         //initComponents();
     private void intiComponents(){
         JLabel heading=new JLabel("Chat");
