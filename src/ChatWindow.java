@@ -3,6 +3,11 @@ import java.awt.*;
 
 public class ChatWindow {
     public ChatWindow(String recipName){
+        try{
+            System.out.println("sending request");
+            socket =new Socket("127.0.0.1",7777 );
+            System.out.println("successful connection");
+        }
         JFrame frame = new JFrame(recipName);
         frame.setLocationRelativeTo(null);
         frame.setSize(300, 300);
@@ -17,5 +22,6 @@ public class ChatWindow {
         frame.add(BorderLayout.SOUTH, sendingPanel);
         frame.add(messagesPanel);
         frame.setVisible(true);
+
     }
 }
