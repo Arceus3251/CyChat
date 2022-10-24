@@ -1,17 +1,14 @@
 import javax.swing.*;
-import java.awt.Font;
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import java.awt.*;
 
 public class ChatWindow {
     //public ChatWindow(){
         //initComponents();
     //}
-    //private void intiComponents(){
-    private JLabel heading=new JLabel("Chat");
-    private JTextArea messageScreen= new JTextArea();
-    private JTextField messageInput=new JTextField();
-    private Font font=new Font("Roboto",Font.PLAIN,20;)
-    //}
+    private void intiComponents(){
+    JLabel heading=new JLabel("Chat");
+    JTextArea messageScreen= new JTextArea();
+    JTextField messageInput=new JTextField();
+    Font font=new Font("Roboto",Font.PLAIN,20);
+    }
 }
