@@ -1,23 +1,27 @@
 import javax.swing.*;
 import java.awt.*;
-import java.net.
 
-public class ChatWindow extends JFrame {
-    //pu blic ChatWindow(){
-        //initComponents();
-    private void intiComponents(){
-        JLabel heading=new JLabel("Chat");
-        JTextArea messageScreen= new JTextArea();
-        JTextField messageInput=new JTextField();
-        Font font=new Font("Roboto",Font.PLAIN,20);
-
-    }
-    public ChatWindow(){
+public class ChatWindow {
+    public ChatWindow(String recipName){
         try{
             System.out.println("sending request");
             socket =new Socket("127.0.0.1",7777 );
             System.out.println("successful connection");
         }
+        JFrame frame = new JFrame(recipName);
+        frame.setLocationRelativeTo(null);
+        frame.setSize(300, 300);
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        JMenuBar actionBar = new JMenuBar();
+        //TODO: Add Top Bar Actions
+        JPanel sendingPanel = new JPanel();
+        //TODO: Add elements required to send chat message textField and send button, add action listener for enter.
+        JScrollPane messagesPanel = new JScrollPane();
+        //TODO: Take message packet and throw it on here.
+        frame.add(BorderLayout.NORTH, actionBar);
+        frame.add(BorderLayout.SOUTH, sendingPanel);
+        frame.add(messagesPanel);
+        frame.setVisible(true);
 
     }
 }
