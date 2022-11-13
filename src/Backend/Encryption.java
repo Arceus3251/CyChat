@@ -1,48 +1,84 @@
+package Backend;
+
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.GCMParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Base64;
 
-public class Encryption {
-    private SecretKey key; //declaration of the key to be used for encryption of type SecretKey
-    private final int KEY_SIZE = 128; //setting the key size to 128 bits (will be configurable by the user at some point)
-    private final int DATA_LENGTH = 128; //setting the length of the data to 128 bits (the length will be determined by the length of the message the user is sending)
-    private Cipher encryptionCipher; //declaration of encryptioncipher of type Cipher
+
+public class Encryption
+{
+
+    private static byte[] key;
+    private static SecretKeySpec secureKey; //declaration of the key to be used for encryption, uses javax.crypto library
+
 
     //generates key using chosen algorithm
-    public void init() throws Exception {
-        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES"); //key generated using chosen algorithm   -list of algorithms that can be used for encryption/decryption:
-        keyGenerator.init(KEY_SIZE); //size of key is set to KEY_SIZE                                         -https://docs.oracle.com/en/java/javase/11/docs/specs/security/standard-names.html#cipher-algorithm-names
-        key = keyGenerator.generateKey(); //key is generated                                                  -the lists of algorithm modes and padding modes are also included in that link ^^^
+    public static void createKey(String userKey)
+    {
+        try
+        {
+            MessageDigest sha1 = null; //uses java.security library, see documentation for more info
+            key = userKey.getBytes("UTF-8");
+            sha1 = MessageDigest.getInstance("SHA-1");
+
+            key = sha1.digest(key);
+            key = Arrays.copyOf(key, 16);
+            secureKey = new SecretKeySpec(key, "AES");
+
+        } catch (UnsupportedEncodingException e)
+            {
+                e.printStackTrace(); //used for testing and error logs
+            } catch (NoSuchAlgorithmException e)
+                {
+                    e.printStackTrace(); // need this catch in order to use .getInstance, uses java.security library
+                }
+
     }
+
+    /*
+    -list of algorithms that can be used for encryption/decryption:
+    -https://docs.oracle.com/en/java/javase/11/docs/specs/security/standard-names.html#cipher-algorithm-names
+    -the lists of algorithm modes and padding modes are also included in that link ^^^
+     */
 
     //encryption method: converts string to bytes, encrypts bytes using the chosen algorithm, algorithm mode, and padding mode
-    public String encrypt(String data) throws Exception {
-        byte[] dataInBytes = data.getBytes(); //converts "data" into bytes for encryption
-        encryptionCipher = Cipher.getInstance("AES/GCM/NoPadding"); //encryption options are selected           (Algorithm) / (Algorithm Mode) / (Padding Mode)
-        encryptionCipher.init(Cipher.ENCRYPT_MODE, key); //cipher is in encryption mode, uses key to encrypt   -some algorithm modes and padding modes may not be compatible with certain algorithms, will have to test this
-        byte[] encryptedBytes = encryptionCipher.doFinal(dataInBytes); //the cipher is applied to the bytes, now we have the encrypted bytes
-        return encode(encryptedBytes); //bytes are encoded
+    public static String encrypt(String data, String crypt)
+    {
+        try
+        {
+            createKey(crypt);
+            Cipher algo = Cipher.getInstance("AES/ECB/PKCS5Padding"); //encryption options are selected           (Algorithm) / (Algorithm Mode) / (Padding Mode)
+
+            algo.init(Cipher.ENCRYPT_MODE, secureKey); //cipher is in encryption mode, uses key to encrypt   -some algorithm modes and padding modes may not be compatible with certain algorithms, will have to test this
+
+            return Base64.getEncoder().encodeToString(algo.doFinal(data.getBytes("UTF-8"))); //bytes are encoded
+        } catch (Exception e)
+            {
+                System.out.println("Error encrypting message");
+            }
+            return null;
     }
 
-    //descryption method: decrypts bytes, converts bytes to string
-    public String decrypt(String encryptedData) throws Exception {
-        byte[] dataInBytes = decode(encryptedData); //bytes are decoded
-        Cipher decryptionCipher = Cipher.getInstance("AES/GCM/NoPadding"); //decryption options are selected (should be same as encryption)
-        GCMParameterSpec spec = new GCMParameterSpec(DATA_LENGTH, encryptionCipher.getIV());
-        decryptionCipher.init(Cipher.DECRYPT_MODE, key, spec); //cipher is set to decryption mode, uses key to decrypt
-        byte[] decryptedBytes = decryptionCipher.doFinal(dataInBytes); //decryption cipher is applied to bytes, now we have the decrypted bytes
-        return new String(decryptedBytes); //bytes are converted to string
-    }
 
-    //encoder method
-    private String encode(byte[] data) {
-        return Base64.getEncoder().encodeToString(data);
-    }
+    //decryption method: decrypts bytes, converts bytes to string
+    public static String decrypt(String encryptedData, String crypt)
+    {
+       try
+       {
+           createKey(crypt);
+           Cipher algo = Cipher.getInstance("AES/ECB/PKCS5Padding"); //decryption options are selected (should be same as encryption)
 
-    //decoder method
-    private byte[] decode(String data) {
-        return Base64.getDecoder().decode(data);
+           algo.init(Cipher.DECRYPT_MODE, secureKey); //cipher is set to decryption mode, uses key to decrypt
+
+           return new String(algo.doFinal(Base64.getDecoder().decode(encryptedData))); //bytes are converted to string
+       }catch (Exception e)
+           {
+               System.out.println("Error decrypting message");
+           }
+           return null;
     }
 }
