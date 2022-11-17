@@ -49,6 +49,10 @@ public class ChatWindow
     private JLabel image;
 
 
+    private ServerThread server;
+    private Peer peer;
+
+
     private JSONObject message;
     private JSONArray currentPeerMessage;
     private JSONArray otherPeerMessage;
@@ -67,13 +71,36 @@ public class ChatWindow
 
                 if (serverButton.isSelected()) // waits for server button inorder to turn on the server
                 {
-                    //TODO: Spin up a new server
+                    int port = -1;
+                    String text = readUser("Enter Port Number:");
+
+                    if (text != null)
+                        port = Integer.parseInt(text);
+                    else
+                        setServerButton(false);
+
+                    if (port != -1)
+                    {
+                        server = new ServerThread(port, window);
+                        writeToServer("Connected to port: " + server.getPort());
+
+                        server.start();//starts server thread
+                    }
 
                 }
 
                 if (!serverButton.isSelected() && server != null)
                 {
-                    //Server does not exist, attempt to make a new one
+                    server.terminate = true;
+                    try (Socket temp = new Socket("localhost", server.getPort());)
+                    {
+
+                        writeToServer("Server Disconnected!");
+
+                    } catch (Exception e)
+                        {
+                            System.out.println(e.toString());
+                        }
                 }
 
             }
@@ -86,12 +113,31 @@ public class ChatWindow
             {
                 if (peerToggle.isSelected())
                 {
-                    //TODO: Create a new instance to allow chatting to a peer
+                    PeerWindow peerWindow = new PeerWindow();
+                    peerWindow.setSize(300, 200);
+                    peerWindow.setLocationRelativeTo(null);
+                    peerWindow.setResizable(false);
+                    peerWindow.setVisible(true);
+
+                    if (peerWindow.getCancelState() == false)
+                    {
+                        sendButton.setEnabled(true);
+                        addPeerKey.setEnabled(true);
+                        clearButton.setEnabled(true);
+                        saveButton.setEnabled(true);
+                        String hostName = peerWindow.getHostName();
+                        int portNumber = peerWindow.getPortNumber();
+                        String secret = peerWindow.getUniqueID();
+                        peer = new Peer(hostName, portNumber, secret, window);
+                        peer.start();
+                    } else
+                        {
+                            setPeerToggle(false);
+                        }
                 }
 
                 if (!peerToggle.isSelected() && peer != null)
                 {
-                    //Disable all functionality to avoid errors.
                     sendButton.setEnabled(false);
                     addPeerKey.setEnabled(false);
                     clearButton.setEnabled(false);
@@ -108,7 +154,18 @@ public class ChatWindow
             @Override
             public void actionPerformed(ActionEvent actionEvent)
             {
-                //TODO: Add a new Peer Window
+                AddPeerWindow addPeerWindow = new AddPeerWindow();
+                addPeerWindow.setSize(300, 180);
+                addPeerWindow.setLocationRelativeTo(null);
+                addPeerWindow.setResizable(false);
+                addPeerWindow.setVisible(true);
+
+                if (addPeerWindow.getCancelStatus() == false)
+                {
+                    String id = addPeerWindow.getKeyField();
+                    String secret = addPeerWindow.getIdField();
+                    peer.addSecretOfId(id, secret);
+                }
             }
         });
 
