@@ -34,3 +34,10 @@ Once having Java version 15 and Json-simple installed on desktop. Download our s
 * Decrypted messages
 ![image](https://user-images.githubusercontent.com/60751628/202943616-82db2a8c-634e-49c1-8b44-836140cb04e4.png)
 ![image](https://user-images.githubusercontent.com/60751628/202943636-7bf31926-1e01-4c86-84ca-fd806825cbd2.png)
+
+#### Contributors 
+* Adam Seltzer
+* Jacob Lozano
+* Joshua DeFreece
+* Itzel Martinez
+* Christian Townes
