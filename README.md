@@ -4,11 +4,10 @@
 #### The purpose of CyChat is to provide users a secure way to create a peer-to-peer chat connection to one another by enabling users to select different encryption algorithms, making it harder for attackers to track the currently used algorithm, thus making it more difficult to break encryption. Because it is a peer-to-peer chat software, there is no database used which reduceds if not eliminates the risk of information leakage and personal information being hacked.
 
 ### <ins> Must Have: </ins>
-To use our program you must have Java version 15 and Json-simple file version 1.1.1:
-#### https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/json-simple/json-simple-1.1.1.jar
+To use our program you must have Java version 15 and our CyChat software.
 
 ### <ins> How To Start:</ins>
-Once having Java version 15 and Json-simple installed on desktop. Download our software: CyChat.jar and run the software. 
+Once having Java version 15 installed on desktop. Download our software: CyChat.jar and run the software. 
 * Once open you will click on the top left corner to turn on server. 
 * Insert the port everyone will be connected to, then proceed to turn on chat window. 
 * You will be prompted to enter a Host name, Port number, and a unique identifier (Port number prompted when turning on chat window will be the same port number user imputs when turning on server). 
