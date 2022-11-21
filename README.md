@@ -23,9 +23,14 @@ Once having Java version 15 and Json-simple installed on desktop. Download our s
 
 
 #### Screenshots:
+* Turn on Server
 ![image](https://user-images.githubusercontent.com/60751628/202943208-a60e7302-9ad4-4940-a2d3-438d891051ff.png)
+* Turn on Chat window
 ![image](https://user-images.githubusercontent.com/60751628/202943262-60da1f1f-991d-4400-924f-66bf5b768c1d.png)
+* First message Encrypted 
 ![image](https://user-images.githubusercontent.com/60751628/202943466-76bab55b-ad0a-49c9-bb4d-b4a8a6ca6fe5.png)
+* Inserting Public key and Unique identifier 
 ![image](https://user-images.githubusercontent.com/60751628/202943540-4b079bcd-dfd9-45b2-bc21-1187c2deb70b.png)
+* Decrypted messages
 ![image](https://user-images.githubusercontent.com/60751628/202943616-82db2a8c-634e-49c1-8b44-836140cb04e4.png)
 ![image](https://user-images.githubusercontent.com/60751628/202943636-7bf31926-1e01-4c86-84ca-fd806825cbd2.png)
