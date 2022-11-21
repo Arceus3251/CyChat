@@ -6,8 +6,10 @@ import java.awt.event.*;
 public class PeerWindow extends JDialog
 {
     private JPanel peerPanel;
+    // create buttons for user (ok and Cancel)
     private JButton buttonOK;
     private JButton buttonCANCEL;
+    //create text feilds for user to input information
     private JTextField hostName;
     private JTextField portNumber;
     private JTextField uniqueID;
@@ -20,7 +22,8 @@ public class PeerWindow extends JDialog
         setContentPane(peerPanel);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-
+        
+        //create actionlistners for when ok or cancel buttons pressed
         buttonOK.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -61,6 +64,7 @@ public class PeerWindow extends JDialog
 
     private void onOK()
     {
+        // setting error messages for invalid inputs
         if(hostName.getText().equals(""))
         {
             errorLabel.setText("Host Name cannot be empty");
@@ -85,7 +89,8 @@ public class PeerWindow extends JDialog
         cancelState = false;
         dispose();
     }
-
+    
+    
     private void onCancel()
     {
         cancelState = true;
